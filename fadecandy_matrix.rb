@@ -43,20 +43,13 @@ class FadeRuby::NeoPixelMatrix < FadeRuby::DisplaySurface
 			pixels.push(FadeRuby::Pixel.new)
 		end
     end
-#	puts "Initialize NeoPixelMatrix =>" + pixels.inspect
-	#      NeoPixelMatrix.pixels[0].set(r: 255, g: 128, b: 0)
-    #      NeoPixelMatrix.pixels[1].set(r: 255, g: 128, b: 0)
-    #      NeoPixelMatrix.write(NeoPixelMatrix, 1)
   end
   
-#  def set_pixels(x,y)
-#  end
 end
 
   def socket
     return @s if @s
     @s = TCPSocket.new('127.0.0.1', 7890)
-#    @s = TCPSocket.open('127.0.0.1', 7890)
     @s.setsockopt(Socket::IPPROTO_TCP, Socket::TCP_NODELAY, 1)
     return @s
   end
@@ -67,9 +60,6 @@ end
     size = (colors.length * 8)
     data = colors.pack('C*')
     header = [channel, 0, data.length].pack('CCS>')
-#    puts "length =>" + colors.length.to_s
-#    puts "header =>" + header.inspect
-#    puts "data =>" + data.inspect
     socket.send header+data, 0
     @s = TCPSocket.new('localhost', 7890)
     @s.print(header+data)
